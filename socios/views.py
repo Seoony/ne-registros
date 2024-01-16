@@ -1,51 +1,41 @@
-from django.shortcuts import render
-
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
-from socios.models import Socio
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from socios.serializers import SocioSerializer
+from socios.models import Socio
 
-@csrf_exempt
-def socio_list(request):
-    """
-    List all code snippets, or create a new snippet.
-    """
-    if request.method == 'GET':
-        socios = Socio.objects.all()
-        serializer = SocioSerializer(socios, many=True)
-        return JsonResponse(serializer.data, safe=False)
+@api_view(['GET'])
+def hello_world(request):
+    return Response({"message": "Hello, world!"})
 
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = SocioSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+@api_view(['GET']) 
+def list_socios(request):
+    socios = Socio.objects.all()
+    serializer = SocioSerializer(socios, many=True)
+    return Response(serializer.data)
 
-@csrf_exempt
-def socio_detail(request, pk):
-    """
-    Retrieve, update or delete a code snippet.
-    """
-    try:
-        socio = Socio.objects.get(pk=pk)
-    except Socio.DoesNotExist:
-        return HttpResponse(status=404)
+@api_view(['GET'])
+def list_socio(request, pk):
+    socio = Socio.objects.get(id=pk)
+    serializer = SocioSerializer(socio, many=False)
+    return Response(serializer.data)
 
-    if request.method == 'GET':
-        serializer = SocioSerializer(socio)
-        return JsonResponse(serializer.data)
+@api_view(['POST'])
+def create_socio(request):
+    serializer = SocioSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = SocioSerializer(socio, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
+@api_view(['PUT'])
+def update_socio(request, pk):
+    socio = Socio.objects.get(id=pk)
+    serializer = SocioSerializer(instance=socio, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
 
-    elif request.method == 'DELETE':
-        socio.delete()
-        return HttpResponse(status=204)
+@api_view(['DELETE'])
+def delete_socio(request, pk):
+    socio = Socio.objects.get(id=pk)
+    socio.delete()
+    return Response("Socio eliminado")

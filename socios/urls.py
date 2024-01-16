@@ -1,7 +1,11 @@
 from django.urls import path
-from socios import views
+from . import views
 
 urlpatterns = [
-    path('socios/', views.socio_list),
-    path('socios/<int:pk>/', views.socio_detail),
+    path('', views.hello_world),
+    path('socios/', views.list_socios),
+    path('socios/<int:pk>/', views.list_socio),
+    path('socios/create/', views.create_socio),
+    path('socios/<int:pk>/update/', views.update_socio),
+    path('socios/<int:pk>/delete/', views.delete_socio),
 ]
