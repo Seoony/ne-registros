@@ -2,7 +2,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from socios.serializers import SocioSerializer
 from socios.models import Socio
-from django.views.decorators.csrf import csrf_exempt
 
 @api_view(['GET'])
 def hello_world(request):
@@ -20,7 +19,6 @@ def list_socio(request, pk):
     serializer = SocioSerializer(socio, many=False)
     return Response(serializer.data)
 
-@csrf_exempt
 @api_view(['POST'])
 def create_socio(request):
     serializer = SocioSerializer(data=request.data)
@@ -28,7 +26,6 @@ def create_socio(request):
         serializer.save()
     return Response(serializer.data)
 
-@csrf_exempt
 @api_view(['PUT'])
 def update_socio(request, pk):
     socio = Socio.objects.get(id=pk)
@@ -37,7 +34,6 @@ def update_socio(request, pk):
         serializer.save()
     return Response(serializer.data)
 
-@csrf_exempt
 @api_view(['DELETE'])
 def delete_socio(request, pk):
     socio = Socio.objects.get(id=pk)
