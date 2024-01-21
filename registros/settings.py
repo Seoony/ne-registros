@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework", # Django REST Framework
     "socios.apps.SociosConfig",
+    "tipo_deporte.apps.TipoDeporteConfig",
+    "ficha_inscripcion.apps.FichaInscripcionConfig",
     "corsheaders", # CORS
 ]
 

@@ -13,9 +13,9 @@ class Socio(models.Model):
     estado = models.CharField(max_length=1, default="A")
 
     def __str__(self):
-        return self.nombres
+        return self.nombres + " " + self.apellidos
 
     class Meta:
         verbose_name_plural = "Socios"
         verbose_name = "Socio"
-        ordering = ['nombres']
+        ordering = ['id']
