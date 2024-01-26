@@ -5,13 +5,13 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('socios', '0002_rename_socios_socio'),
-    ]
+  dependencies = [
+    ('socios', '0002_rename_socios_socio'),
+  ]
 
-    operations = [
-        migrations.AlterModelOptions(
-            name='socio',
-            options={'ordering': ['id'], 'verbose_name': 'Socio', 'verbose_name_plural': 'Socios'},
-        ),
-    ]
+  operations = [
+    migrations.AlterModelOptions(
+      name='socio',
+      options={'ordering': ['id'], 'verbose_name': 'Socio', 'verbose_name_plural': 'Socios'},
+    ),
+  ]
